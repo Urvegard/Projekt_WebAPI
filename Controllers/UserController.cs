@@ -39,7 +39,9 @@ namespace Projekt_WebAPI.Controllers
         {            
             var result = await _service.AddUser(user);
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return Ok(user);
         }
     }
 }
+
+///*return CreatedAtAction("GetUser", new { id = user.Id }, user)*/;

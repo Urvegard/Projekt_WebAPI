@@ -23,9 +23,11 @@ namespace Projekt_WebAPI
 
             //Services
             builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<CountryService>();
 
             //Repositories
             builder.Services.AddScoped<UserRepo>();
+            builder.Services.AddScoped<CountryRepo>();
 
 
             var app = builder.Build();

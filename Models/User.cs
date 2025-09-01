@@ -11,7 +11,11 @@ namespace Projekt_WebAPI.Models
 
         public string SurName { get; set; }
 
-        // Relation: User har många Comments
-        public ICollection<Comment> Comments { get; set; }
+        // Foreign Key
+        public int CommentId { get; set; }
+        public Comment Comments { get; set; }
+
+        // Relation: User kan ha många Comments
+        //public ICollection<Comment> Comments { get; set; }
     }
 }
