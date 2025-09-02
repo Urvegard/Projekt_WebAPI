@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Projekt_WebAPI.Models
 {
@@ -10,6 +11,7 @@ namespace Projekt_WebAPI.Models
         public string Name { get; set; }
 
         // Relation: Country har många Cities
+        [JsonIgnore]
         public ICollection<City> Cities { get; set; }
     }
 }

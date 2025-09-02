@@ -14,5 +14,6 @@ namespace Projekt_WebAPI.Models
 
         public int AttractionId { get; set; }
         public Attraction Attraction { get; set; }
+
     }
 }

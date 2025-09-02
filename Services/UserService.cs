@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Projekt_WebAPI.Data;
-using Projekt_WebAPI.Models;
+﻿using Projekt_WebAPI.Models;
 using Projekt_WebAPI.Repository;
 
 namespace Projekt_WebAPI.Services

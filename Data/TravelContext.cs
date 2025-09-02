@@ -43,10 +43,18 @@ namespace Projekt_WebAPI.Data
 
             //Skapar ett index i databasen på kolumnen Name i tabellen User
             modelBuilder.Entity<User>()
-                .HasIndex(a => a.FirstName);
+                .HasIndex(a => a.Name);
 
             //Skapar ett index i databasen på kolumnen Name i tabellen Attraction
             modelBuilder.Entity<Country>()
+                .HasIndex(a => a.Name);
+
+            //Skapar ett index i databasen på kolumnen Name i tabellen Comment
+            modelBuilder.Entity<Comment>()
+                .HasIndex(a => a.Text);
+
+            //Skapar ett index i databasen på kolumnen Name i tabellen Category
+            modelBuilder.Entity<Category>()
                 .HasIndex(a => a.Name);
 
             // Seeding kan också läggas här senare

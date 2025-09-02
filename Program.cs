@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using Projekt_WebAPI.Data;
 using Projekt_WebAPI.Repository;
@@ -24,11 +23,19 @@ namespace Projekt_WebAPI
             //Services
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<CountryService>();
+            builder.Services.AddScoped<CommentService>();
+            builder.Services.AddScoped<CityService>();
+            builder.Services.AddScoped<CategoryService>();
+            builder.Services.AddScoped<AttractionService>();
+
 
             //Repositories
             builder.Services.AddScoped<UserRepo>();
             builder.Services.AddScoped<CountryRepo>();
-
+            builder.Services.AddScoped<CommentRepo>();
+            builder.Services.AddScoped<CityRepo>();
+            builder.Services.AddScoped<CategoryRepo>();
+            builder.Services.AddScoped<AttractionRepo>();
 
             var app = builder.Build();
 

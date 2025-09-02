@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Projekt_WebAPI.Models
 {
@@ -18,6 +19,7 @@ namespace Projekt_WebAPI.Models
         public Category Category { get; set; }
 
         // Relation: Attraction har många Comments
+        [JsonIgnore]
         public ICollection<Comment> Comments { get; set; }
     }
 }
