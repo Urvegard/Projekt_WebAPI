@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Projekt_WebAPI.DTOs;
 using Projekt_WebAPI.Models;
 using Projekt_WebAPI.Services;
 
@@ -32,7 +33,7 @@ namespace Projekt_WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> PostUser(CreateUserDTO user)
         {
             var result = await _service.AddUser(user);
 

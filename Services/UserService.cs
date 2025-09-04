@@ -1,4 +1,5 @@
-﻿using Projekt_WebAPI.Models;
+﻿using Projekt_WebAPI.DTOs;
+using Projekt_WebAPI.Models;
 using Projekt_WebAPI.Repository;
 
 namespace Projekt_WebAPI.Services
@@ -19,9 +20,15 @@ namespace Projekt_WebAPI.Services
             return result;
         }
 
-        public async Task<User> AddUser(User user)
+        public async Task<User> AddUser(CreateUserDTO user)
         {
-            var result = await _repo.AddUser(user);
+            var UserToInsert = new User
+            {
+                Name = user.Name,
+                SurName = user.SurName
+            };
+
+            var result = await _repo.AddUser(UserToInsert);
 
             return result;
         }
