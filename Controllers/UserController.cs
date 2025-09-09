@@ -47,6 +47,13 @@ namespace Projekt_WebAPI.Controllers
 
             return Ok(result);
         }
+        [HttpGet("GetUsersAndComments")]
+        public async Task<ActionResult<User>> GetUsersAndComments()
+        {
+            var result = await _service.ShowUserWithComments();
+
+            return Ok(result);
+        }
     }
 }
 

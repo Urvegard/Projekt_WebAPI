@@ -38,13 +38,13 @@ namespace Projekt_WebAPI.Controllers
 
             return Ok(comment);
         }
-        [HttpGet(Name = "GetUsersAndComments")]
-        public async Task<ActionResult<Comment>> GetUsersAndComments()
-        {
-            var result = await _service.ShowUserComments();
+        //[HttpGet(Name = "GetUsersAndComments")]
+        //public async Task<ActionResult<Comment>> GetUsersAndComments()
+        //{
+        //    var result = await _service.ShowUserWithComments();
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
     }
 }
 

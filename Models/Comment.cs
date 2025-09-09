@@ -11,8 +11,6 @@ namespace Projekt_WebAPI.Models
 
         // Foreign Keys - En user kan SKRIVA många "comments" och en attraction kan HA många "comments.
         public int UserId { get; set; }
-
-        [JsonIgnore]
         public User User { get; set; }
 
         public int AttractionId { get; set; }

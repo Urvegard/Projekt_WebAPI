@@ -39,12 +39,54 @@ namespace Projekt_WebAPI.Controllers
             return Ok(attraction);
         }
 
-        [HttpGet(Name = "GetAttractionsByCategory")]
+        [HttpGet("GetAttractionsByCategory")]
         public async Task<ActionResult<Attraction>> GetAttractionsByCategory(string category)
         {
             var result = await _service.FilterAttractionByCategory(category);
 
             return Ok(result);
+        }
+        [HttpGet("GetAttractionsByCountry")]
+        public async Task<ICollection<Attraction>> GetAttractionsByCountry(string Country)
+        {
+            var result = await _service.FilterAttractionByCountry(Country);
+
+            return result;
+        }
+        [HttpGet("GetAttractionsByName")]
+        public async Task<ICollection<Attraction>> GetAttractionsByName(string Name)
+        {
+            var result = await _service.FilterAttractionByName(Name);
+
+            return result;
+        }
+        [HttpGet("GetAttractionsByDescription")]
+        public async Task<ICollection<Attraction>> GetAttractionsByDescription(string Description)
+        {
+            var result = await _service.FilterAttractionByDescription(Description);
+
+            return result;
+        }
+        [HttpGet("GetAttractionsByCity")]
+        public async Task<ICollection<Attraction>> GetAttractionsByCity(string City)
+        {
+            var result = await _service.FilterAttractionByCity(City);
+
+            return result;
+        }
+        [HttpGet("GetAttractionsWhereNoComment")]
+        public async Task<ICollection<Attraction>> GetAttractionsWhereNoComment()
+        {
+            var result = await _service.FilterAttractionWhereNoComment();
+
+            return result;
+        }
+        [HttpGet("GetAttractionByID")]
+        public async Task<Attraction> GetAttractionByID(int Attractionid)
+        {
+            var result = await _service.FindAttractionByID(Attractionid);
+
+            return result;
         }
     }
 }

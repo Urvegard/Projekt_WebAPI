@@ -11,6 +11,7 @@ namespace Projekt_WebAPI.Models
         public string Name { get; set; }
 
         // Relation: Country har många Cities
+        // Foreign Key
         [JsonIgnore]
         public ICollection<City> Cities { get; set; }
     }

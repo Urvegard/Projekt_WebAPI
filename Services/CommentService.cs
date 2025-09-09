@@ -25,14 +25,14 @@ namespace Projekt_WebAPI.Services
 
             return result;
         }
-        public async Task<ICollection<Comment>> ShowUserComments()
-        {
-            var result = await _repo.ShowUserComments();
+        //public async Task<ICollection<Comment>> ShowUserComments()
+        //{
+        //    var result = await _repo.ShowUserComments();
 
-            //var result = _context.Attractions.Include(b => b.Category).
-            //    Include(b => b.City.Country).Include(b => b.City.Name).ToList();
+        //    //var result = _context.Attractions.Include(b => b.Category).
+        //    //    Include(b => b.City.Country).Include(b => b.City.Name).ToList();
 
-            return result;
-        }
+        //    return result;
+        //}
     }
 }

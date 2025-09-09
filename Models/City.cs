@@ -9,7 +9,7 @@ namespace Projekt_WebAPI.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        // Foreign Key
+        // Foreign Keys
         public int CountryId { get; set; }
         public Country Country { get; set; }
 

@@ -35,5 +35,41 @@ namespace Projekt_WebAPI.Services
 
             return result;
         }
+        public async Task<ICollection<Attraction>> FilterAttractionByCountry(string Country)
+        {
+            var result = await _repo.FilterAttractionByCountry(Country);
+
+            return result;
+        }
+        public async Task<ICollection<Attraction>> FilterAttractionByName(string Name)
+        {
+            var result = await _repo.FilterAttractionByName(Name);
+
+            return result;
+        }
+        public async Task<ICollection<Attraction>> FilterAttractionByDescription(string Description)
+        {
+            var result = await _repo.FilterAttractionByDescription(Description);
+
+            return result;
+        }
+        public async Task<ICollection<Attraction>> FilterAttractionByCity(string City)
+        {
+            var result = await _repo.FilterAttractionByCity(City);
+
+            return result;
+        }
+        public async Task<ICollection<Attraction>> FilterAttractionWhereNoComment()
+        {
+            var result = await _repo.FilterAttractionWhereNoComment();
+
+            return result;
+        }
+        public async Task<Attraction> FindAttractionByID(int Attractionid)
+        {
+            var result = await _repo.FindAttractionByID(Attractionid);
+
+            return result;
+        }
     }
 }

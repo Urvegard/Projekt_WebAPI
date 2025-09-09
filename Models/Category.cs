@@ -11,6 +11,7 @@ namespace Projekt_WebAPI.Models
         public string Name { get; set; }
 
         // Relation: Category har många Attractions
+        // Foreign Key
         [JsonIgnore]
         public ICollection<Attraction> Attractions { get; set; }
     }

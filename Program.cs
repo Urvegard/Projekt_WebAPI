@@ -61,4 +61,4 @@ namespace Projekt_WebAPI
 
 // Skapa SeedGenerator inuti "Data - folder".
 
-// Vi behöver bara USER(klar) - ATTRACTION(klar) - COMMENTS + SEED.
+// Vi behöver bara USER(klar) - ATTRACTION(klar) - COMMENTS(klar) + SEED.
