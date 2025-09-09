@@ -28,5 +28,12 @@ namespace Projekt_WebAPI.Repository
             
             return user;
         }
+
+        public async Task<User>GetUserById(int userID)
+        {
+            var result = await _context.Users.FindAsync(userID);
+
+            return result;
+        }
     }
 }

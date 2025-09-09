@@ -1,4 +1,5 @@
-﻿using Projekt_WebAPI.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Projekt_WebAPI.Models;
 using Projekt_WebAPI.Repository;
 
 namespace Projekt_WebAPI.Services
@@ -22,6 +23,15 @@ namespace Projekt_WebAPI.Services
         public async Task<Attraction> AddAttraction(Attraction attraction)
         {
             var result = await _repo.AddAttraction(attraction);
+
+            return result;
+        }
+        public async Task<ICollection<Attraction>> FilterAttractionByCategory(string Category)
+        {
+            var result = await _repo.FilterAttractionByCategory(Category);
+            
+            //var result = _context.Attractions.Include(b => b.Category).
+            //    Include(b => b.City.Country).Include(b => b.City.Name).ToList();
 
             return result;
         }

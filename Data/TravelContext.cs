@@ -49,7 +49,7 @@ namespace Projekt_WebAPI.Data
             modelBuilder.Entity<Country>()
                 .HasIndex(a => a.Name);
 
-            //Skapar ett index i databasen på kolumnen Name i tabellen Comment
+            //Skapar ett index i databasen på kolumnen Text i tabellen Comment
             modelBuilder.Entity<Comment>()
                 .HasIndex(a => a.Text);
 

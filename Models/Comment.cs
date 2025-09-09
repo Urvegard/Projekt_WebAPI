@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Projekt_WebAPI.Models
 {
@@ -10,7 +11,9 @@ namespace Projekt_WebAPI.Models
 
         // Foreign Keys - En user kan SKRIVA många "comments" och en attraction kan HA många "comments.
         public int UserId { get; set; }
-        public User Users { get; set; }
+
+        [JsonIgnore]
+        public User User { get; set; }
 
         public int AttractionId { get; set; }
         public Attraction Attraction { get; set; }

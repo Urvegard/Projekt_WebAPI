@@ -16,20 +16,20 @@ namespace Projekt_WebAPI.Controllers
         {
             _service = service;
         }
-        
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
-        { 
-            try 
-            { 
-                var user = await _service.AllUsers(); 
-                
-                return Ok(user); 
-            } 
-            catch (Exception ex) 
-            { 
-                return StatusCode(500, $"Internal server error: {ex.Message}"); 
-            } 
+        {
+            try
+            {
+                var user = await _service.AllUsers();
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpPost]
@@ -38,6 +38,14 @@ namespace Projekt_WebAPI.Controllers
             var result = await _service.AddUser(user);
 
             return Ok(user);
+        }
+
+        [HttpGet("{userID}")]
+        public async Task<ActionResult<User>> PostUserById(int userID)
+        {
+            var result = await _service.GetUserById(userID);
+
+            return Ok(result);
         }
     }
 }

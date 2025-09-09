@@ -1,4 +1,5 @@
-﻿using Projekt_WebAPI.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using Projekt_WebAPI.DTOs;
 using Projekt_WebAPI.Models;
 using Projekt_WebAPI.Repository;
 
@@ -20,6 +21,8 @@ namespace Projekt_WebAPI.Services
             return result;
         }
 
+        // Skapar en ny "User Entity",(ny användare), via DTO:n.
+        // Bra för att kontrollera känslig data.
         public async Task<User> AddUser(CreateUserDTO user)
         {
             var UserToInsert = new User
@@ -32,6 +35,11 @@ namespace Projekt_WebAPI.Services
 
             return result;
         }
-    }
+        public async Task<User> GetUserById(int userID)
+        {
+            var result = await _repo.GetUserById(userID); 
 
+            return result;
+        }
+    }
 }

@@ -58,20 +58,7 @@ namespace Projekt_WebAPI
     }
 }
 
-// 1. Skapa Modeller (klasser)
 
-// 2. Skapa Controller -> Vid skapande välj "API empty" -> [HttpGet]
+// Skapa SeedGenerator inuti "Data - folder".
 
-// 3. Lägg till DbSet i TravelContext ex: public virtual DbSet<City> Cities { get; set; }
-
-// 4. add-migration (sök efter package manager console)
-
-// 5. update-database (sök efter package manager console)
-
-
-// 1. Skapa en Service och en Repo för alla entiteter. Kopiera User! Glöm inte Program.cs(builder).
-
-
-// Controllern = Kommunicerar mot användaren 
-// Service = bearbetar data "Hjärnan bakom allt"
-// Repository = kommunicerar mot databasen
+// Vi behöver bara USER(klar) - ATTRACTION(klar) - COMMENTS + SEED.

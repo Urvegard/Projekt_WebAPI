@@ -27,5 +27,15 @@ namespace Projekt_WebAPI.Repository
 
             return comment;
         }
+        public async Task<ICollection<Comment>> ShowUserComments()
+        {
+            //var result = await _context.Comments.Where(x => x.Users.Name == Comment).ToListAsync();
+
+            var result = await _context.Comments.Include(u => u.User.Comments)
+                .ThenInclude(c => c.User.Name).ToListAsync();
+
+            return result;
+
+        }
     }
 }

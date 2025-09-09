@@ -38,6 +38,14 @@ namespace Projekt_WebAPI.Controllers
 
             return Ok(attraction);
         }
+
+        [HttpGet(Name = "GetAttractionsByCategory")]
+        public async Task<ActionResult<Attraction>> GetAttractionsByCategory(string category)
+        {
+            var result = await _service.FilterAttractionByCategory(category);
+
+            return Ok(result);
+        }
     }
 }
 

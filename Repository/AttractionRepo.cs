@@ -27,5 +27,24 @@ namespace Projekt_WebAPI.Repository
 
             return attraction;
         }
+        //public async Task<Attraction> FilterAttraction(int attractionID)
+        //{
+        //    await _context.Attractions.FindAsync(attractionID);
+
+        //    var result = _context.Attractions.Include(b => b.Category).
+        //        Include(b => b.City.Country).Include(b => b.City.Name).ToList();
+
+        //    return attractionID;
+        //}
+        public async Task<ICollection<Attraction>>FilterAttractionByCategory(string Category)
+        {
+            var result = await _context.Attractions.Where(x => x.Category.Name == Category).ToListAsync();
+
+            //var result = _context.Attractions.Include(b => b.Category).
+            //    Include(b => b.City.Country).Include(b => b.City.Name).ToList();
+
+            return result;
+
+        }
     }
 }
