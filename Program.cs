@@ -7,18 +7,17 @@ namespace Projekt_WebAPI
 {
     public class Program
     {
-        public static void Main(string[] args)
+        //public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddDbContext<TravelContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SQL")));
+            
             // Add services to the container.
-
+            builder.Services.AddScoped<SeedGenerator>();
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-            builder.Services.AddDbContext<TravelContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SQL")));
 
             //Services
             builder.Services.AddScoped<UserService>();
@@ -38,6 +37,13 @@ namespace Projekt_WebAPI
             builder.Services.AddScoped<AttractionRepo>();
 
             var app = builder.Build();
+
+            // ---- SEED DATA VID START ----
+            using (var scope = app.Services.CreateScope())
+            {
+                var seeder = scope.ServiceProvider.GetRequiredService<SeedGenerator>();
+                await seeder.Seeder();  // <--- kör dina seedingmetoder
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

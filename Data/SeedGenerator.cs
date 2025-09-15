@@ -18,8 +18,34 @@ namespace Projekt_WebAPI.Data
         {
             if (await _context.Countries.AnyAsync())
             {
-
+                await SeedCountries();
             }
+            if (await _context.Cities.AnyAsync())
+            {
+                await SeedCities();
+            }
+            if (await _context.Categories.AnyAsync())
+            {
+                await SeedCategories();
+            }
+            if (await _context.Users.AnyAsync())
+            {
+                await SeedUsers();
+            }
+            if (await _context.Attractions.AnyAsync())
+            {
+                await SeedAttractions();
+            }
+            if (await _context.Comments.AnyAsync())
+            {
+                await SeedComments();
+            }
+            //await SeedCountries();
+            //await SeedCities();
+            //await SeedCategories();
+            //await SeedUsers();
+            //await SeedAttractions();
+            //await SeedComments();
         }
         public async Task ClearDatabase()
         {
@@ -238,10 +264,39 @@ namespace Projekt_WebAPI.Data
         private async Task SeedComments()
         {
             //1. Hämta alla Attractions
-
             //2. Skapa slumpmässiga Comments
-
             //3. Koppla en slumpmässigt vald Attraction mot vår Comment
+            var userIds = _context.Users.Select(u => u.Id).ToList();
+            var attractionIds = _context.Attractions.Select(a => a.Id).ToList();
+
+            var randomAttractionComments = new List<Comment>();
+            var totalComments = 20;
+
+            for (int i = 0; i < totalComments; i++)
+            {
+                var userId = userIds[_random.Next(userIds.Count)];
+                var attractionId = attractionIds[_random.Next(attractionIds.Count)];
+
+                var randomComments = new[]
+                {
+                    "Fantastiskt ställe!", "Helt underbart!", "Rekommenderar starkt!", "Rekommenderar inte.",
+                    "Så fint!", "Väldigt intressant.", "Vilken upplevelse!",
+                    "För mycket folk.", "Fantastisk utsikt!", "Jag kommer garanterat besöka igen.",
+                    "Fascinerande och lärorikt.", "Det var helt okej.", "Väldigt avslappnande.", "Overrated tycker jag.",
+                    "Detta var en gömd pärla!", "Rätt tråkigt om du frågar mig.", "Magiskt!", "Superroligt!", "Rogivande.", "Väldigt rent och prydligt."
+                };
+
+                // Lägger till alla seedade/skapade sevärdheter i listan
+                randomAttractionComments.Add(new Comment
+                {
+                    Text = randomComments[_random.Next(randomComments.Length)] + " " + (i + 1),
+                    UserId = userId,
+                    AttractionId = attractionId
+                });
+                // Lägg till i databasen och spara
+                await _context.Comments.AddRangeAsync(randomAttractionComments);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }
