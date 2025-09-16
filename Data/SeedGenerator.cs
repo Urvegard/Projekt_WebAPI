@@ -16,27 +16,27 @@ namespace Projekt_WebAPI.Data
 
         public async Task Seeder()
         {
-            if (await _context.Countries.AnyAsync())
+            if (!await _context.Countries.AnyAsync())
             {
                 await SeedCountries();
             }
-            if (await _context.Cities.AnyAsync())
+            if (!await _context.Cities.AnyAsync())
             {
                 await SeedCities();
             }
-            if (await _context.Categories.AnyAsync())
+            if (!await _context.Categories.AnyAsync())
             {
                 await SeedCategories();
             }
-            if (await _context.Users.AnyAsync())
+            if (!await _context.Users.AnyAsync())
             {
                 await SeedUsers();
             }
-            if (await _context.Attractions.AnyAsync())
+            if (!await _context.Attractions.AnyAsync())
             {
                 await SeedAttractions();
             }
-            if (await _context.Comments.AnyAsync())
+            if (!await _context.Comments.AnyAsync())
             {
                 await SeedComments();
             }
@@ -79,6 +79,7 @@ namespace Projekt_WebAPI.Data
         private async Task SeedCategories()
         {
             // Skapa samma som Countries - ingen koppling mellan dem här.
+
             var categories = new[]
             {
                 new Category { Name = "Restaurant" },
@@ -88,7 +89,20 @@ namespace Projekt_WebAPI.Data
                 new Category { Name = "Nature" }
             };
 
-            await _context.Categories.AddRangeAsync(categories);
+            // Skapa ny lista över seedade Categories.
+            var category = new List<Category>();
+            var randomCategory = _random.Next(categories.Length);
+            
+            // For-loop för att iterera och skapa categories.
+            for (int i = 0; i < randomCategory; i++)
+            {
+                category.Add(new Category
+                {
+                    Name = randomCategory.ToString()
+                });
+            }
+
+            await _context.Categories.AddRangeAsync(category);
             await _context.SaveChangesAsync();
         }
         private async Task SeedUsers()
@@ -108,7 +122,7 @@ namespace Projekt_WebAPI.Data
                 "Jansson", "Hansson", "Bengtsson", "Jönsson", "Lindberg", "Jakobsson"
             };
 
-            // Skapa ny lista över seedade användare där minst 50 skapas upp emot 75 totalt
+            // Skapa ny lista över seedade användare.
             var users = new List<User>();
             var userCount = 50;
             //var userCount = _random.Next(50, 75);
@@ -210,9 +224,9 @@ namespace Projekt_WebAPI.Data
 
                 // TODO: Add more cities for different countries
                 // 
-                await _context.Cities.AddRangeAsync(cities);
-                await _context.SaveChangesAsync();
             }
+            await _context.Cities.AddRangeAsync(cities);
+            await _context.SaveChangesAsync();
         }
         private async Task SeedAttractions()
         {
@@ -250,7 +264,9 @@ namespace Projekt_WebAPI.Data
                 // Lägger till alla seedade/skapade sevärdheter i listan
                 attractions.Add(new Attraction
                 {
-                    Name = titles[_random.Next(titles.Length)] + " " + (i + 1),
+                    //Name = titles[_random.Next(titles.Length)] + " " + (i + 1),
+                    
+                    Name = titles[_random.Next(titles.Length)],
                     Description = descriptions[_random.Next(descriptions.Length)],
                     CityId = cityId,
                     CategoryId = categoryId
@@ -289,14 +305,16 @@ namespace Projekt_WebAPI.Data
                 // Lägger till alla seedade/skapade sevärdheter i listan
                 randomAttractionComments.Add(new Comment
                 {
-                    Text = randomComments[_random.Next(randomComments.Length)] + " " + (i + 1),
+                    //Text = randomComments[_random.Next(randomComments.Length)] + " " + (i + 1),
+
+                    Text = randomComments[_random.Next(randomComments.Length)],
                     UserId = userId,
                     AttractionId = attractionId
                 });
+            }
                 // Lägg till i databasen och spara
                 await _context.Comments.AddRangeAsync(randomAttractionComments);
                 await _context.SaveChangesAsync();
-            }
         }
     }
 }

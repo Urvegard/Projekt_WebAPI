@@ -42,7 +42,7 @@ namespace Projekt_WebAPI
             using (var scope = app.Services.CreateScope())
             {
                 var seeder = scope.ServiceProvider.GetRequiredService<SeedGenerator>();
-                await seeder.Seeder();  // <--- kör dina seedingmetoder
+                await seeder.Seeder();  // <--- kör seedingmetoder
             }
 
             // Configure the HTTP request pipeline.
