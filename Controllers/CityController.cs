@@ -41,18 +41,3 @@ namespace Projekt_WebAPI.Controllers
 
     }
 }
-
-//[HttpGet]
-//public async Task<ActionResult<string>> GetAllCities()
-//{
-//    try
-//    {
-//        var cities = "test"; return Ok(cities);
-//    }
-//    catch (Exception ex)
-//    {
-//        return StatusCode(500, $"Internal server error: {ex.Message}");
-//    }
-//}
-
-//public CityController(ICityService cityService) { _cityService = cityService; }   

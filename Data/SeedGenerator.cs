@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Projekt_WebAPI.Models;
 using System;
 
@@ -6,7 +8,7 @@ namespace Projekt_WebAPI.Data
 {
     public class SeedGenerator
     {
-        private readonly  TravelContext _context;
+        private readonly TravelContext _context;
         private readonly Random _random;
         public SeedGenerator(TravelContext context)
         {
@@ -14,8 +16,10 @@ namespace Projekt_WebAPI.Data
             _random = new Random();
         }
 
-        public async Task Seeder()
+        public async Task<string> Seeder()
         {
+            await ClearDatabase();
+
             if (!await _context.Countries.AnyAsync())
             {
                 await SeedCountries();
@@ -40,30 +44,22 @@ namespace Projekt_WebAPI.Data
             {
                 await SeedComments();
             }
-            //await SeedCountries();
-            //await SeedCities();
-            //await SeedCategories();
-            //await SeedUsers();
-            //await SeedAttractions();
-            //await SeedComments();
+            return "Seeding completed";
         }
-        public async Task ClearDatabase()
+        public async Task<string> ClearDatabase()
         {
             //Rensar DB:n
-
-            await _context.Comments.ExecuteDeleteAsync();
-            await _context.Users.ExecuteDeleteAsync();
-            await _context.Attractions.ExecuteDeleteAsync();
-            await _context.Cities.ExecuteDeleteAsync();
-            await _context.Countries.ExecuteDeleteAsync();
-            await _context.Categories.ExecuteDeleteAsync();
+            _context.Database.EnsureDeleted();
+            _context.Database.EnsureCreated();
 
             //Sparar den nu rensade DB:n 
             await _context.SaveChangesAsync();
+
+            return "Deletion of database completed";
         }
         private async Task SeedCountries()
         {
-            var countries = new List<Country> 
+            var countries = new List<Country>
             {
                 new Country { Name = "Sverige" },
                 new Country { Name = "Norge" },
@@ -80,7 +76,7 @@ namespace Projekt_WebAPI.Data
         {
             // Skapa samma som Countries - ingen koppling mellan dem här.
 
-            var categories = new[]
+            var categories = new List<Category>()
             {
                 new Category { Name = "Restaurant" },
                 new Category { Name = "Café" },
@@ -88,21 +84,7 @@ namespace Projekt_WebAPI.Data
                 new Category { Name = "Architecture" },
                 new Category { Name = "Nature" }
             };
-
-            // Skapa ny lista över seedade Categories.
-            var category = new List<Category>();
-            var randomCategory = _random.Next(categories.Length);
-            
-            // For-loop för att iterera och skapa categories.
-            for (int i = 0; i < randomCategory; i++)
-            {
-                category.Add(new Category
-                {
-                    Name = randomCategory.ToString()
-                });
-            }
-
-            await _context.Categories.AddRangeAsync(category);
+            await _context.Categories.AddRangeAsync(categories);
             await _context.SaveChangesAsync();
         }
         private async Task SeedUsers()
@@ -125,7 +107,6 @@ namespace Projekt_WebAPI.Data
             // Skapa ny lista över seedade användare.
             var users = new List<User>();
             var userCount = 50;
-            //var userCount = _random.Next(50, 75);
 
             // For-loop för att iterera och skapa antalet användare
             for (int i = 0; i < userCount; i++)
@@ -208,22 +189,6 @@ namespace Projekt_WebAPI.Data
                     Name = cityName,
                     CountryId = countryId
                 });
-                // Letar efter specifikt land och dess ID
-
-                //var sverige = countries.First(c => c.Name == "Sverige");
-                //cities.Add(new City { Name = "Stockholm", CountryId = sverige.Id });
-
-                //var norge = countries.First(c => c.Name == "Norge");
-                //cities.Add(new City { Name = "Oslo", CountryId = norge.Id });
-
-                //var danmark = countries.First(c => c.Name == "Danmark");
-                //cities.Add(new City { Name = "Köpenhamn", CountryId = danmark.Id });
-
-                //var finland = countries.First(c => c.Name == "Finland");
-                //cities.Add(new City { Name = "Helsingfors", CountryId = finland.Id });
-
-                // TODO: Add more cities for different countries
-                // 
             }
             await _context.Cities.AddRangeAsync(cities);
             await _context.SaveChangesAsync();
@@ -261,12 +226,25 @@ namespace Projekt_WebAPI.Data
                     "One of the most visited places in the city."
                 };
 
+                var adresses = new[]
+               {
+                    "Kungsgatan 2B",
+                    "Basunvägen 32",
+                    "Liljevägen 14",
+                    "Myråsvägen 17",
+                    "Drottninggatan 4",
+                    "Lilla Slingan 2A",
+                    "Hovslagarevägen 5",
+                    "Vasagatan 10",
+                    "Grevgatan 6",
+                    "Frestavägen 7"
+                };
+
                 // Lägger till alla seedade/skapade sevärdheter i listan
                 attractions.Add(new Attraction
                 {
-                    //Name = titles[_random.Next(titles.Length)] + " " + (i + 1),
-                    
                     Name = titles[_random.Next(titles.Length)],
+                    Adress = adresses[_random.Next(adresses.Length)],
                     Description = descriptions[_random.Next(descriptions.Length)],
                     CityId = cityId,
                     CategoryId = categoryId
@@ -279,14 +257,11 @@ namespace Projekt_WebAPI.Data
         }
         private async Task SeedComments()
         {
-            //1. Hämta alla Attractions
-            //2. Skapa slumpmässiga Comments
-            //3. Koppla en slumpmässigt vald Attraction mot vår Comment
             var userIds = _context.Users.Select(u => u.Id).ToList();
             var attractionIds = _context.Attractions.Select(a => a.Id).ToList();
 
             var randomAttractionComments = new List<Comment>();
-            var totalComments = 20;
+            var totalComments = 750;
 
             for (int i = 0; i < totalComments; i++)
             {
@@ -312,9 +287,9 @@ namespace Projekt_WebAPI.Data
                     AttractionId = attractionId
                 });
             }
-                // Lägg till i databasen och spara
-                await _context.Comments.AddRangeAsync(randomAttractionComments);
-                await _context.SaveChangesAsync();
+            // Lägg till i databasen och spara
+            await _context.Comments.AddRangeAsync(randomAttractionComments);
+            await _context.SaveChangesAsync();
         }
     }
 }

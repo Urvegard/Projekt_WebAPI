@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Projekt_WebAPI.Controllers;
 using Projekt_WebAPI.Data;
+using Projekt_WebAPI.DTOs;
 using Projekt_WebAPI.Models;
 
 namespace Projekt_WebAPI.Repository
@@ -20,30 +21,47 @@ namespace Projekt_WebAPI.Repository
             return result;
         }
 
-        public async Task<User>AddUser(User user)
+        public async Task<User> AddUser(User user)
         {
             await _context.Users.AddAsync(user);
-            
+
             var result = await _context.SaveChangesAsync();
-            
+
             return user;
         }
 
-        public async Task<User>GetUserById(int userID)
+        public async Task<User> GetUserById(int userID)
         {
             var result = await _context.Users.FindAsync(userID);
 
             return result;
         }
-        public async Task<ICollection<User>> ShowUserWithComments()
+        public async Task<ICollection<UserWithCommentsDTO>> ShowUserWithComments()
         {
-            //var result = await _context.Comments.Where(x => x.Users.Name == Comment).ToListAsync();
-
-            var result = await _context.Users.Include(u => u.Comments)
+            var result = await _context.Users.Include(u => u.Comments).ThenInclude(c => c.Attraction)
                 .ToListAsync();
 
-            return result;
+            var users = new List<UserWithCommentsDTO>();
 
+            foreach (var user in result)
+            {
+                //Kommer att visa användarens kommentarer samt vilken sevärdhet den är skriven på.
+
+                var userDTO = new UserWithCommentsDTO
+                {
+                    Name = user.Name,
+                    SurName = user.SurName,
+                    Comments = user.Comments
+                    .Select(c => new CommentsDTO
+                    {
+                        Text = c.Text,
+                        AttractionName = c.Attraction?.Name   
+                    })
+                    .ToList()
+                };
+                users.Add(userDTO);
+            }
+            return users;
         }
     }
 }

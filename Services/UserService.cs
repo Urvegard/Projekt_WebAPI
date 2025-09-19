@@ -41,7 +41,7 @@ namespace Projekt_WebAPI.Services
 
             return result;
         }
-        public async Task<ICollection<User>> ShowUserWithComments()
+        public async Task<ICollection<UserWithCommentsDTO>> ShowUserWithComments()
         {
             var result = await _repo.ShowUserWithComments();
 

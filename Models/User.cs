@@ -15,6 +15,7 @@ namespace Projekt_WebAPI.Models
 
         // Relation: User kan ha många Comments 
         // Foreign Key
+
         [JsonIgnore]
         public ICollection<Comment> Comments { get; set; }
     }

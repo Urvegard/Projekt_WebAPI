@@ -38,24 +38,5 @@ namespace Projekt_WebAPI.Controllers
 
             return Ok(comment);
         }
-        //[HttpGet(Name = "GetUsersAndComments")]
-        //public async Task<ActionResult<Comment>> GetUsersAndComments()
-        //{
-        //    var result = await _service.ShowUserWithComments();
-
-        //    return Ok(result);
-        //}
     }
 }
-
-//public async Task<ActionResult<string>> GetAllComments()
-//{
-//    try
-//    {
-//        var comments = "test"; return Ok(comments);
-//    }
-//    catch (Exception ex)
-//    {
-//        return StatusCode(500, $"Internal server error: {ex.Message}");
-//    }
-//}
