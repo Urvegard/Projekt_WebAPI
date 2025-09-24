@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Projekt_WebAPI.DTOs;
 using Projekt_WebAPI.Models;
 using Projekt_WebAPI.Repository;
 
@@ -29,9 +30,6 @@ namespace Projekt_WebAPI.Services
         public async Task<ICollection<Attraction>> FilterAttractionByCategory(string Category)
         {
             var result = await _repo.FilterAttractionByCategory(Category);
-            
-            //var result = _context.Attractions.Include(b => b.Category).
-            //    Include(b => b.City.Country).Include(b => b.City.Name).ToList();
 
             return result;
         }
@@ -59,7 +57,7 @@ namespace Projekt_WebAPI.Services
 
             return result;
         }
-        public async Task<ICollection<Attraction>> FilterAttractionWhereNoComment()
+        public async Task<ICollection<AttractionsWhereCommentsNullDTO>> FilterAttractionWhereNoComment()
         {
             var result = await _repo.FilterAttractionWhereNoComment();
 

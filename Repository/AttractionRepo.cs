@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Projekt_WebAPI.Data;
+using Projekt_WebAPI.DTOs;
 using Projekt_WebAPI.Models;
 
 namespace Projekt_WebAPI.Repository
@@ -27,12 +28,9 @@ namespace Projekt_WebAPI.Repository
 
             return attraction;
         }
-        public async Task<ICollection<Attraction>>FilterAttractionByCategory(string Category)
+        public async Task<ICollection<Attraction>> FilterAttractionByCategory(string Category)
         {
             var result = await _context.Attractions.Where(x => x.Category.Name == Category).ToListAsync();
-
-            //var result = _context.Attractions.Include(b => b.Category).
-            //    Include(b => b.City.Country).Include(b => b.City.Name).ToList();
 
             return result;
         }
@@ -61,11 +59,30 @@ namespace Projekt_WebAPI.Repository
 
             return result;
         }
-        public async Task<ICollection<Attraction>> FilterAttractionWhereNoComment()
+        public async Task<ICollection<AttractionsWhereCommentsNullDTO>> FilterAttractionWhereNoComment()
         {
-            var result = await _context.Attractions.Where(x => x.Comments.Count == 0).ToListAsync();
+            var result = await _context.Attractions.Include(u => u.Comments).Where(i => !i.Comments.Any())
+                .ToListAsync();
+            var attracionNoComments = new List<AttractionsWhereCommentsNullDTO>();
 
-            return result;
+            foreach (var attraction in result)
+            {
+                //Kommer att visa sevärdheter där kommentaren är null.
+
+                var attractionNocomment = new AttractionsWhereCommentsNullDTO
+                {
+                    Name = attraction.Name,
+                    Comments = attraction.Comments
+                    .Select(c => new CommentsDTO
+                    {
+                        Text = c.Text,
+                        AttractionName = c.Attraction?.Name
+                    })
+                    .ToList()
+                };
+                attracionNoComments.Add(attractionNocomment);
+            }
+            return attracionNoComments;
         }
         public async Task<Attraction> FindAttractionByID(int Attractionid)
         {

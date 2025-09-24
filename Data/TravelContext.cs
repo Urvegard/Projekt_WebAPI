@@ -56,8 +56,6 @@ namespace Projekt_WebAPI.Data
             //Skapar ett index i databasen på kolumnen Name i tabellen Category
             modelBuilder.Entity<Category>()
                 .HasIndex(a => a.Name);
-
-            // Seeding kan också läggas här senare
         }
 
     }

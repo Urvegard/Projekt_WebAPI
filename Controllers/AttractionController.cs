@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Projekt_WebAPI.DTOs;
 using Projekt_WebAPI.Models;
 using Projekt_WebAPI.Services;
 
@@ -75,7 +76,7 @@ namespace Projekt_WebAPI.Controllers
             return result;
         }
         [HttpGet("GetAttractionsWhereNoComment")]
-        public async Task<ICollection<Attraction>> GetAttractionsWhereNoComment()
+        public async Task<ICollection<AttractionsWhereCommentsNullDTO>> GetAttractionsWhereNoComment()
         {
             var result = await _service.FilterAttractionWhereNoComment();
 

@@ -56,5 +56,3 @@ namespace Projekt_WebAPI.Controllers
         }
     }
 }
-
-///*return CreatedAtAction("GetUser", new { id = user.Id }, user)*/;
